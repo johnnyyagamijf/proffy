@@ -40,14 +40,11 @@
                     <label for="weekday">Dia da semana</label>
                     <select name="weekday" id="weekday">
                         <option value="" disabled="" hidden="">Selecione uma opção</option>
-                        <option value="0">Domingo</option>
-                        <option value="1">Segunda-feira</option>
-                        <option value="2">Terça-feira</option>
-                        <option value="3">Quarta-feira</option>
-                        <option value="4">Quinta-feira</option>
-                        <option value="5">Sexta-feira</option>
-                        <option value="6">Sábado</option>
-                    </select>
+
+                        {%for weekday in weekdays%}
+                        <option value="{{loop.index0}}" {{"selected" if filters.weekday == loop.index0}}>{{weekday}}</option>
+                        {%endfor%}
+                       </select>
                 </div>
                 <div class="input-block">
                     <label for="time">Hora</label>
@@ -58,11 +55,14 @@
          </div>
      </header>
      <main>
+         {%if proffys == ""%}
+         <p class="no-results">Nenhum professor encontrado com a sua pesquisa.</p>
+         {% else %}
          {%for proffy in proffys%}
          <article class="teacher-item">
             <header>
                 <img 
-                    src="{{proffy.img}}" 
+                    src="{{proffy.avatar}}" 
                     alt="{{proffy.name}}">
                 <div>
                     <strong>{{proffy.name}}</strong>
@@ -82,7 +82,8 @@
                 </a>
             </footer>
         </article>
-         {%endfor%}
+         {% endfor %}
+         {% endif %}
        
      </main>
     </div>
